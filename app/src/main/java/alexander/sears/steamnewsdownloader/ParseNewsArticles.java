@@ -2,6 +2,9 @@ package alexander.sears.steamnewsdownloader;
 
 import android.util.Log;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
@@ -53,19 +56,24 @@ public class ParseNewsArticles {
                                 inItem = false;
                             }else if("title".equalsIgnoreCase(tagName)){
                                 currentRecord.setTitle(textValue);
-                            }else if("content:encoded".equalsIgnoreCase(tagName)){
-                                currentRecord.setContent(textValue);
+                            }else if("encoded".equalsIgnoreCase(tagName)){
+                                // using jsoup we parse the html content for the image
+                                Document doc = Jsoup.parse(textValue);
+                                Element img = doc.select("img").first();
+                                currentRecord.setImage(img.attr("src"));
                             }else if("link".equalsIgnoreCase(tagName)){
                                 currentRecord.setLink(textValue);
+                            }else{
+                                //Log.d(TAG, "parse: "+tagName);
                             }
                         }
                         break;
                 }
                 eventType = xpp.next();
-                for(FeedEntry news:newsArticles){
-                    Log.d(TAG, "**************************");
-                    Log.d(TAG, news.toString());
-                }
+            }
+            for(FeedEntry news:newsArticles){
+                Log.d(TAG, "**************************");
+                Log.d(TAG, news.toString());
             }
         } catch (Exception e){
             status = false;

@@ -3,7 +3,7 @@ package alexander.sears.steamnewsdownloader;
 public class FeedEntry {
 
     private String title;
-    private String content;
+    private String image;
     private String link;
 
     public String getTitle() {
@@ -14,12 +14,12 @@ public class FeedEntry {
         this.title = title;
     }
 
-    public String getContent() {
-        return content;
+    public String getImage() {
+        return image;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setImage(String content) {
+        this.image = content;
     }
 
     public String getLink() {
@@ -32,8 +32,8 @@ public class FeedEntry {
 
     @Override
     public String toString() {
-        return "title=" + title + '\n' +
-                ", content=" + content + '\n' +
-                ", link=" + link + '\n';
+        return "\n title = " + title + '\n' +
+                "\n image = " + image + '\n' +
+                "\n link = " + link + '\n';
     }
 }
